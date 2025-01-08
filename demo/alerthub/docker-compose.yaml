@@ -1,0 +1,14 @@
+services:
+  redis:
+    container_name: "redis"
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    labels:
+      - "service.namespace=storage"
+      - "service.name=redis"
+    networks:
+      - alertmanager
+    volumes:
+      - ../volumes/redis-data:/data
+

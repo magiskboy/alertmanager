@@ -1,0 +1,16 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:${PROMETHEUS_VERSION}
+    labels:
+      - "service.namespace=obs"
+      - "service.name=prometheus"
+    command:
+      - --config.file=/config/prometheus-config.yaml
+    volumes:
+      - ./prometheus-config.yaml:/config/prometheus-config.yaml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - alertmanager
+

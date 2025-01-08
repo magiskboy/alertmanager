@@ -1,0 +1,23 @@
+services:
+  seaweedfs:
+    container_name: seaweedfs
+    image: chrislusf/seaweedfs:${SEAWEEDFS_VERSION}
+    labels:
+      - "service.namespace=storage"
+      - "service.name=seaweedfs"
+    command:
+      - server
+      - -s3
+      - -s3.config=/workspace/seaweedfs-config.json
+    ports:
+      - "8333:8333"
+    volumes:
+      - ./seaweedfs-config.json:/workspace/seaweedfs-config.json:ro
+      - ../volumes/seaweedfs-data:/data
+    networks:
+      - alertmanager
+    healthcheck:
+      test: wget -qO- http://127.0.0.1:8333/status
+      interval: 10s
+      timeout: 10s
+      retries: 3

@@ -1,0 +1,22 @@
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:${GRAFANA_VERSION}
+    labels:
+      - "service.namespace=obs"
+      - "service.name=grafana"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_USERS_DEFAULT_THEME=light
+      - GF_LOG_MODE=console
+      - GF_LOG_LEVEL=critical
+    volumes:
+      - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - ./grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./dashboards/:/var/lib/grafana/dashboards/:ro
+    ports:
+      - "3000:3000"
+    networks:
+      - alertmanager
+

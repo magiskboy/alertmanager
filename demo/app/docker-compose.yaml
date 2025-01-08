@@ -1,0 +1,13 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: ./app
+    ports:
+      - "8000:8000"
+    labels:
+      - "service.namespace=app"
+      - "service.name=app"
+    networks:
+      - alertmanager
+

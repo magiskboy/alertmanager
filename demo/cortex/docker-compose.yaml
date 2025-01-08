@@ -1,0 +1,19 @@
+services:
+  cortex:
+    container_name: cortex
+    image: quay.io/cortexproject/cortex:${CORTEX_VERSION}
+    command:
+      - -config.file=/config/cortex-config.yaml
+    volumes:
+      - ./cortex-config.yaml:/config/cortex-config.yaml:ro
+    ports:
+      - "9009:9009"
+    healthcheck:
+        test: wget -qO- http://127.0.0.1:9009/ready
+        interval: 10s
+        timeout: 10s
+        retries: 3
+    restart: on-failure
+    networks:
+      - alertmanager
+

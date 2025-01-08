@@ -1,0 +1,12 @@
+include:
+  - ./app/docker-compose.yaml
+  - ./cortex/docker-compose.yaml
+  - ./prometheus/docker-compose.yaml
+  - ./grafana/docker-compose.yaml
+  - ./seaweedfs/docker-compose.yaml
+  - ./kafka/docker-compose.yaml
+  - ./alerthub/docker-compose.yaml
+
+networks:
+  alertmanager:
+
